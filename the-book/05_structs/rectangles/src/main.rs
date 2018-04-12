@@ -5,6 +5,17 @@ struct Rectangle {
     height: u32,
 }
 
+impl Rectangle {
+    fn area(&self) -> u32 {
+        // don't need to specify type, which is inferred from struct itself
+        // do need to use a reference &
+        //   - methods can take ownership, just like anywhere else
+        //   - usu want to take ownership if method changes the struct and you
+        //     want to avoid using the original instance after that change
+        self.width * self.height
+    }
+}
+
 fn main() {
     let rect1 = Rectangle { width: 30, height: 50 };
 
@@ -19,10 +30,6 @@ fn main() {
 
     println!(
         "The area of the rect is {} square pixels",
-        area(&rect1)
+        rect1.area()
     );
-}
-
-fn area(rectangle: &Rectangle) -> u32 {
-    rectangle.width * rectangle.height
 }
