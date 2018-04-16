@@ -44,10 +44,35 @@ struct Point<T> {
     y: T,
 }
 
+// must declare T just after impl. this tells compiler that the T in Point<T> is a generic type
+// rather than a concrete type.
+impl<T> Point<T> {
+    fn x(&self) -> &T {
+        &self.x
+    }
+}
+
+// this would only be implemented on Points where the type is f32
+impl Point<f32> {
+    fn distance_from_origin(&self) -> f32 {
+        (self.x.powi(2) + self.y.powi(2)).sqrt()
+    }
+}
+
 // allow type of fields to be different
 struct PointTwo<T, U> {
     x: T,
     y: U,
+}
+
+// might want to use different generic types in method sigs
+impl<T, U> PointTwo<T, U> {
+    fn mixup<V, W>(self, other: PointTwo<V, W>) -> PointTwo<T, W> {
+        PointTwo {
+            x: self.x,
+            y: other.y,
+        }
+    }
 }
 
 fn main() {
@@ -71,5 +96,14 @@ fn main() {
     let both_float = PointTwo { x: 1.0, y: 4.0 };
     let integer_and_float = PointTwo { x: 5, y: 4.0 };
 
+    // mixing up types
+    let p1 = PointTwo { x: 5, y: 10.4}; // T is i32, U is f32
+    let p2 = PointTwo { x: "Hello", y: 'c' }; // V is str, W is char
+    let p3 = p1.mixup(p2); // output will be <T, W> (i32 and char)
+
+    println!("p3.x = {}, p3.y = {}", p3.x, p3.y );
 }
 
+// Important: performance isn't affected by using generics. compiler will do _monomorphization_ of
+// code using generics at compile time. It looks at how functions like mixup actually get called by
+// the source and compiles separate versions of it for those cases.
