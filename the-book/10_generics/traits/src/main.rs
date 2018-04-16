@@ -13,6 +13,10 @@ impl Summarizable for WeatherForecast {
         format!("The high will be {}, and the low will be {}. The chance of precipitiation is {}%.",
                 self.high_temp, self.low_temp, self.chance_of_precipitation)
     }
+
+    fn author_summary(&self) -> String {
+        format!("NWCC")
+    }
 }
 
 fn main() {
