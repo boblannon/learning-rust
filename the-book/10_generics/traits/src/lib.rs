@@ -1,3 +1,6 @@
+use std::fmt::Display;
+use std::fmt::Debug;
+
 pub trait Summarizable {
 
     // default behavior, if not implemented directly
@@ -33,6 +36,22 @@ impl Summarizable for Tweet {
     fn author_summary(&self) -> String {
         format!("@{}", self.username)
     }
+}
+
+// We're using a generic type here (T), but trait bounds make it impossible to call this function
+// unless the type implements the Summarizable trait.
+pub fn notify<T: Summarizable>(item: T) {
+    println!("Breaking news! {}", item.summary());
+}
+
+// multiple trait bounds
+pub fn some_function<V: Display + Clone, U: Clone + Debug>(v: V, u: U) -> i32 {}
+
+// we could also write this with a where clause, which is neater
+pub fn another_function<V, U>(v: V, u: U) -> i32
+    where V: Display + Clone,
+          U: Clone + Debug
+{
 }
 
 #[cfg(test)]
