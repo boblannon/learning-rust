@@ -27,6 +27,17 @@ fn shortcut() -> Result<String, io::Error> {
     Ok(s)
 }
 
+fn even_shorter() -> Result<String, io::Error> {
+    let mut s = String::new();
+
+    // chaining method calls after ?
+    File::open("hello.txt")?.read_to_string(&mut s)?;
+
+    Ok(s)
+
+}
+
+
 fn main() {
     //read_username_from_file();
     let output = shortcut();
@@ -34,4 +45,8 @@ fn main() {
         Ok(file) => file,
         Err(e) => panic!("Oops! {:?}", e),
     };
+
+    // main doesn't return a result, so it can't use ? operator. This will not
+    // compile:
+    // let f = File::open("hello.txt")?;
 }
