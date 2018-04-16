@@ -1,0 +1,10 @@
+[package]
+name = "unrecoverable"
+version = "0.1.0"
+authors = ["Bob Lannon <bob.lannon@mapbox.com>"]
+
+[dependencies]
+
+# If you want a panic to trigger an immediate abort:
+# [profile.release]
+# panic = "abort"
