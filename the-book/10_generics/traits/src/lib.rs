@@ -45,13 +45,38 @@ pub fn notify<T: Summarizable>(item: T) {
 }
 
 // multiple trait bounds
-pub fn some_function<V: Display + Clone, U: Clone + Debug>(v: V, u: U) -> i32 {}
+// pub fn some_function<V: Display + Clone, U: Clone + Debug>(v: V, u: U) -> i32 {}
 
 // we could also write this with a where clause, which is neater
-pub fn another_function<V, U>(v: V, u: U) -> i32
-    where V: Display + Clone,
-          U: Clone + Debug
-{
+// pub fn another_function<V, U>(v: V, u: U) -> i32
+//     where V: Display + Clone,
+//           U: Clone + Debug
+// {
+// }
+
+struct Pair<T> {
+    x: T,
+    y: T,
+}
+
+impl<T> Pair<T> {
+    fn new(x: T, y: T) -> Self {
+        Self {
+            x,
+            y,
+        }
+    }
+}
+
+// can make it so that some methods are only implemented for types with impl of certain traits
+impl<T: Display + PartialOrd> Pair<T> {
+    fn cmp_display(&self) {
+        if self.x >= self.y {
+            println!("The largest member is x = {}", self.x);
+        } else {
+            println!("The largest member is y = {}", self.y);
+        }
+    }
 }
 
 #[cfg(test)]
