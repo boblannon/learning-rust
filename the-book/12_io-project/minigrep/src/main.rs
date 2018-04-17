@@ -16,9 +16,6 @@ fn main() {
     });
 
     //  (2) Setting up any other configuration
-    println!("Searching for {}", config.query);
-    println!("In file {}", config.filename);
-
     //  (3) calling a `run` function in lib.rs
     //  (4) handling errors if `run` returns them
     if let Err(e) = minigrep::run(config) {
