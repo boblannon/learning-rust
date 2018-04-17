@@ -7,7 +7,7 @@ fn main() {
     //  (1) Calling the command line parsing logic with the argument values
     let args: Vec<String> = env::args().collect();
 
-    let config = parse_config(&args);
+    let config = Config::new(&args);
 
     //  (2) Setting up any other configuration
     //  (3) calling a `run` function in lib.rs
@@ -31,12 +31,14 @@ struct Config {
     filename: String,
 }
 
-fn parse_config(args: &[String]) -> Config {
-    // clone is a perf hit, but here it's not too big, and it simiplifies our code to have the
-    // Config struct own the values, so that we don't need to manage lifetimes, scope, etc.
-    let query = args[1].clone();
-    let filename = args[2].clone();
+impl Config {
+    fn new(args: &[String]) -> Config {
+        // clone is a perf hit, but here it's not too big, and it simiplifies our code to have the
+        // Config struct own the values, so that we don't need to manage lifetimes, scope, etc.
+        let query = args[1].clone();
+        let filename = args[2].clone();
 
-    // variables and fields have the same name, so shortcut to assignment works here
-    Config { query, filename }
+        // variables and fields have the same name, so shortcut to assignment works here
+        Config { query, filename }
+    }
 }
