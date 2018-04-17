@@ -33,6 +33,10 @@ struct Config {
 
 impl Config {
     fn new(args: &[String]) -> Config {
+        if args.len() < 3 {
+            panic!("not enough arguments");
+        }
+
         // clone is a perf hit, but here it's not too big, and it simiplifies our code to have the
         // Config struct own the values, so that we don't need to manage lifetimes, scope, etc.
         let query = args[1].clone();
