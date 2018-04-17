@@ -19,8 +19,12 @@ fn main() {
     println!("In file {}", config.filename);
 
     //  (3) calling a `run` function in lib.rs
-    run(config);
     //  (4) handling errors if `run` returns them
+    if let Err(e) = run(config) {
+        println!("Application error: {}", e);
+
+        process::exit(1);
+    };
 
 }
 
