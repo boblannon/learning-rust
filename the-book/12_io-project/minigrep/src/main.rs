@@ -1,4 +1,5 @@
 use std::env;
+use std::process;
 use std::fs::File;
 use std::io::prelude::*;
 
@@ -7,7 +8,10 @@ fn main() {
     //  (1) Calling the command line parsing logic with the argument values
     let args: Vec<String> = env::args().collect();
 
-    let config = Config::new(&args);
+    let config = Config::new(&args).unwrap_or_else(|err| {
+        println!("Problem parsing arguments: {}", err);
+        process::exit(1);
+    });
 
     //  (2) Setting up any other configuration
     //  (3) calling a `run` function in lib.rs
@@ -32,9 +36,9 @@ struct Config {
 }
 
 impl Config {
-    fn new(args: &[String]) -> Config {
+    fn new(args: &[String]) -> Result<Config, &'static str> {
         if args.len() < 3 {
-            panic!("not enough arguments");
+            return Err("not enough arguments");
         }
 
         // clone is a perf hit, but here it's not too big, and it simiplifies our code to have the
@@ -43,6 +47,6 @@ impl Config {
         let filename = args[2].clone();
 
         // variables and fields have the same name, so shortcut to assignment works here
-        Config { query, filename }
+        Ok(Config { query, filename })
     }
 }
