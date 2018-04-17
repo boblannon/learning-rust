@@ -82,17 +82,58 @@ fn main() {
         simulated_random_number
     );
 
-    let simulated_user_specified_value = 26;
+    // let simulated_user_specified_value = 26;
 
-    generate_workout(
-        simulated_user_specified_value,
-        simulated_random_number
-    );
+    // generate_workout(
+    //     simulated_user_specified_value,
+    //     simulated_random_number
+    // );
 
-    let simulated_random_number = 3;
+    // let simulated_random_number = 3;
 
-    generate_workout(
-        simulated_user_specified_value,
-        simulated_random_number
-    );
+    // generate_workout(
+    //     simulated_user_specified_value,
+    //     simulated_random_number
+    // );
+
+    // closures can also capture the local environment
+    let x = 4;
+
+    let equal_to_x = |z| z == x;
+
+    // won't work, x is not in scope
+    // fn equal_to_x(z: i32) -> bool { z == x }
+
+    let y = 4;
+
+    assert!(equal_to_x(y));
+
+    //// force closure to take ownership of values with `move`
+    // let x = vec![1, 2, 3];
+    // let equal_to_x = move |z| z == x;
+    // println!("can't use x here: {:?}", x); // use of moved value: `x`
+    // let y = vec![1, 2, 3];
+    // assert!(equal_to_x(y));
+
+}
+
+#[test]
+fn call_with_different_values() {
+    // fails because Cacher assumes it will always be called with the same arg.
+    // [TODO]: modify Cacher so that it has a hashmap to look up values
+    let mut c = Cacher::new(|a| a);
+
+    let v1 = c.value(1);
+    let v2 = c.value(2);
+
+    assert_eq!(v2, 2);
+}
+
+#[test]
+fn call_with_other_param_types() {
+    // fails because Cacher can only accept closures that take/return u32
+    // [TODO]: modify with generic params to make it more flexible
+    let mut c = Cacher::new(|a| a);
+
+    let v = c.value(15.0f64);
 }
