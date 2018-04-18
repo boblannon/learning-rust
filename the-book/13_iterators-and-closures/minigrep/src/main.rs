@@ -8,9 +8,7 @@ use minigrep::Config;
 fn main() {
     // main function should be limited to:
     //  (1) Calling the command line parsing logic with the argument values
-    let args: Vec<String> = env::args().collect();
-
-    let config = Config::new(&args).unwrap_or_else(|err| {
+    let config = Config::new(env::args()).unwrap_or_else(|err| {
         eprintln!("Problem parsing arguments: {}", err);
         process::exit(1);
     });
