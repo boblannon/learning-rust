@@ -51,20 +51,12 @@ pub fn run(config: Config) -> Result<(), Box<Error>> {
 }
 
 pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
-    let mut results = Vec::new();
-
     // iterate through each line of the contents
-    for line in contents.lines() { // lines method returns iterator
-        // check whether the line contains query
-        if line.contains(query) {
-            // if it does, add it to the list of values we're returning
-            results.push(line);
-        }
-        // if not, do nothing
-    }
-
-    // return list of results that match
-    results
+    contents.lines()
+        // if a line doesn't contain the query, filter it out
+        .filter(|line| line.contains(query))
+        // collect and return the filtered lines
+        .collect()
 }
 
 pub fn search_case_insensitive<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
