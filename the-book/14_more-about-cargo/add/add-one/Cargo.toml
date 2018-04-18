@@ -1,0 +1,7 @@
+[package]
+name = "add-one"
+version = "0.1.0"
+authors = ["Bob Lannon <bob.lannon@mapbox.com>"]
+
+[dependencies]
+rand = "0.3.14"
