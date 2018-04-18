@@ -2,6 +2,11 @@
 //!
 //! A library for modeling artistic concepts
 
+// re-exporting makes these available at the top level
+pub use kinds::PrimaryColor;
+pub use kinds::SecondaryColor;
+pub use utils::mix;
+
 pub mod kinds {
     /// primary colors
     pub enum PrimaryColor {
