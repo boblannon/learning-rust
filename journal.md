@@ -38,9 +38,10 @@ the fast instructions to constructs in the language and leave anyone who
 exceptionally needs totalOrder to pick it from a library or even to define it
 themselves.
 
-**Why I hate it:**
+### Why I hate it:
 - I just want to `.sort()`!
-**Why I shouldn't:**
+
+### Why I shouldn't:
 - In other languages, you can find non-deterministic float NaN sorting
   ```python
   >>> nan = float('nan')
